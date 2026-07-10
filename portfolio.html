@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Портфолио — PHOTOSYRNIK</title>
+    <link rel="manifest" href="manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <div class="flower flower-1"></div>
+    <div class="flower flower-2"></div>
+    <div class="flower flower-3"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">PHOTOSYRNIK</a>
+                <nav class="nav">
+                    <a href="about.html">О нас</a>
+                    <a href="portfolio.html">Портфолио</a>
+                    <a href="prices.html">Цены</a>
+                    <a href="contacts.html">Контакты</a>
+                    <a href="login.html" class="nav-login">Войти</a>
+                </nav>
+                <button class="burger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1 class="page-title">Портфолио</h1>
+                <p class="page-subtitle">Наши лучшие работы</p>
+            </div>
+        </section>
+
+        <section class="portfolio-section">
+            <div class="container">
+                <div class="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="bmw">BMW</button>
+                    <button class="filter-btn" data-filter="porsche">Porsche</button>
+                    <button class="filter-btn" data-filter="mercedes">Mercedes</button>
+                    <button class="filter-btn" data-filter="other">Другое</button>
+                </div>
+                <div class="portfolio-grid" id="portfolioGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <span class="footer-copy">© 2026 PHOTOSYRNIK</span>
+                <div class="footer-socials">
+                    <a href="https://instagram.com/photosyrnik" target="_blank">Instagram</a>
+                    <a href="https://t.me/dj_milena" target="_blank">Telegram</a>
+                    <a href="mailto:photosyrnik@mail.ru">Email</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const portfolioData = [
+            { id: 1, category: 'bmw', img: 'assets/images/portfolio/bmw-1.jpg', title: 'BMW M4' },
+            { id: 2, category: 'bmw', img: 'assets/images/portfolio/bmw-2.jpg', title: 'BMW X6' },
+            { id: 3, category: 'porsche', img: 'assets/images/portfolio/porsche-1.jpg', title: 'Porsche 911' },
+            { id: 4, category: 'porsche', img: 'assets/images/portfolio/porsche-2.jpg', title: 'Porsche Cayenne' },
+            { id: 5, category: 'mercedes', img: 'assets/images/portfolio/mercedes-1.jpg', title: 'Mercedes AMG' },
+            { id: 6, category: 'mercedes', img: 'assets/images/portfolio/mercedes-2.jpg', title: 'Mercedes G-Class' },
+            { id: 7, category: 'other', img: 'assets/images/portfolio/other-1.jpg', title: 'Audi RS6' },
+            { id: 8, category: 'other', img: 'assets/images/portfolio/other-2.jpg', title: 'Lamborghini Urus' }
+        ];
+
+        const grid = document.getElementById('portfolioGrid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function renderPortfolio(category) {
+            const filtered = category === 'all' ? portfolioData : portfolioData.filter(item => item.category === category);
+            grid.innerHTML = filtered.map(item => `
+                <div class="portfolio-item">
+                    <div class="portfolio-img" style="background-image: url('${item.img}')"></div>
+                    <div class="portfolio-info"><h3>${item.title}</h3></div>
+                </div>
+            `).join('');
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderPortfolio(this.dataset.filter);
+            });
+        });
+        renderPortfolio('all');
+    </script>
+</body>
+</html>
