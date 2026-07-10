@@ -1,0 +1,175 @@
+/* ============================================================
+   PHOTOSYRNIK — ОСНОВНЫЕ СТИЛИ
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1a1a1a; line-height: 1.6; overflow-x: hidden; }
+
+h1, h2, h3, .logo, .nav a { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ===== ЦВЕТЫ ===== */
+.flower { position: fixed; pointer-events: none; z-index: 999; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.13; }
+.flower-1 { width: 380px; height: 380px; bottom: -60px; left: -80px; background-image: url('../assets/flowers/flower-1.png'); opacity: 0.18; transform: rotate(-5deg); }
+.flower-2 { width: 260px; height: 260px; top: 15%; right: -40px; background-image: url('../assets/flowers/flower-2.png'); opacity: 0.14; transform: rotate(10deg); }
+.flower-3 { width: 160px; height: 160px; top: 55%; left: 8%; background-image: url('../assets/flowers/flower-3.png'); opacity: 0.10; transform: rotate(20deg); animation: floatFlower 20s infinite alternate ease-in-out; }
+@keyframes floatFlower { 0% { transform: rotate(20deg) translate(0,0) scale(1); } 100% { transform: rotate(35deg) translate(15px,-25px) scale(1.08); } }
+
+/* ===== ШАПКА ===== */
+.header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06); padding: 16px 0; transition: all 0.3s ease; }
+.header.scrolled { background: rgba(255,255,255,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.06); }
+.header-inner { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 32px; font-weight: 700; color: #000; text-decoration: none; letter-spacing: 0.15em; }
+.nav { display: flex; gap: 40px; align-items: center; }
+.nav a { font-size: 14px; color: #1a1a1a; text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s ease; position: relative; }
+.nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #000; transition: width 0.3s ease; }
+.nav a:hover::after { width: 100%; }
+.nav-login { background: #000; color: #fff !important; padding: 8px 24px; border-radius: 30px; transition: all 0.3s ease; }
+.nav-login::after { display: none !important; }
+.nav-login:hover { background: #333; }
+
+.burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.burger span { display: block; width: 28px; height: 2px; background: #000; transition: all 0.3s ease; }
+.burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,5px); }
+
+/* ===== ГЛАВНЫЙ ЭКРАН ===== */
+.hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding-top: 80px; background: #f8f6f4; }
+.hero-bg { position: absolute; top: 0; right: 0; width: 55%; height: 100%; background: url('../assets/images/hero-car.jpg') center/cover no-repeat; opacity: 0.35; z-index: 0; }
+.hero-content { position: relative; z-index: 1; max-width: 650px; padding: 60px 0; }
+.hero-title { font-size: clamp(70px, 14vw, 150px); font-weight: 700; line-height: 1; color: #000; letter-spacing: 0.08em; margin-bottom: 8px; }
+.hero-tagline { font-size: 16px; font-weight: 300; color: #555; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+.hero-text { font-size: 22px; font-weight: 600; color: #1a1a1a; line-height: 1.4; margin-bottom: 8px; max-width: 500px; }
+.hero-text span { display: block; font-weight: 300; font-size: 18px; color: #666; }
+.hero-sub { font-size: 16px; color: #888; font-weight: 300; margin-bottom: 32px; letter-spacing: 0.05em; }
+.hero-btn-wrap { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* ===== КНОПКИ ===== */
+.btn { display: inline-block; padding: 16px 48px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 50px; transition: all 0.4s ease; cursor: pointer; border: 2px solid transparent; }
+.btn-primary { background: #000; color: #fff; border-color: #000; }
+.btn-primary:hover { background: transparent; color: #000; }
+.btn-outline { background: transparent; color: #000; border-color: #000; }
+.btn-outline:hover { background: #000; color: #fff; }
+
+/* ===== ПРЕВЬЮ ===== */
+.preview { padding: 80px 0; background: #fff; }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 5vw, 48px); letter-spacing: 0.06em; text-align: center; margin-bottom: 48px; color: #000; }
+.preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.preview-item { height: 300px; background-size: cover; background-position: center; border-radius: 8px; transition: transform 0.4s ease; }
+.preview-item:hover { transform: scale(1.02); }
+.preview-btn-wrap { text-align: center; margin-top: 40px; }
+
+/* ===== ПРЕИМУЩЕСТВА ===== */
+.advantages { padding: 80px 0; background: #f8f6f4; }
+.advantages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.advantage-number { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #ccc; display: block; margin-bottom: 8px; }
+.advantage h3 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.06em; margin-bottom: 8px; color: #000; }
+.advantage p { color: #555; font-size: 15px; font-weight: 300; }
+
+/* ===== ПОДВАЛ ===== */
+.footer { padding: 40px 0; background: #000; color: #fff; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 13px; opacity: 0.5; }
+.footer-socials { display: flex; gap: 24px; }
+.footer-socials a { color: #fff; text-decoration: none; font-size: 13px; opacity: 0.5; transition: opacity 0.3s ease; }
+.footer-socials a:hover { opacity: 1; }
+
+/* ===== СТРАНИЦЫ ===== */
+.page-hero { padding: 120px 0 40px; background: #f8f6f4; border-bottom: 1px solid #eee; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 72px); letter-spacing: 0.06em; color: #000; margin-bottom: 4px; }
+.page-subtitle { font-size: 16px; font-weight: 300; color: #777; letter-spacing: 0.1em; }
+
+.about-content { padding: 60px 0; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.about-text h2 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.06em; margin-bottom: 16px; }
+.about-text p { color: #444; font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+.about-signature { margin-top: 24px; font-style: italic; color: #777; }
+.signature-name { display: block; font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #000; font-style: normal; }
+.about-photo { height: 400px; background-size: cover; background-position: center; border-radius: 12px; }
+
+.values { padding: 60px 0 80px; background: #fff; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.value-item { text-align: center; }
+.value-number { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #ccc; display: block; }
+.value-item h3 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.06em; margin: 8px 0; }
+.value-item p { color: #666; font-size: 14px; }
+
+.portfolio-section { padding: 40px 0 80px; }
+.portfolio-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; justify-content: center; }
+.filter-btn { padding: 8px 24px; background: none; border: 1px solid #ddd; border-radius: 30px; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.06em; cursor: pointer; transition: all 0.3s ease; color: #666; }
+.filter-btn.active { background: #000; color: #fff; border-color: #000; }
+.filter-btn:hover { border-color: #000; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.portfolio-item { border-radius: 8px; overflow: hidden; cursor: pointer; }
+.portfolio-img { height: 280px; background-size: cover; background-position: center; transition: transform 0.4s ease; }
+.portfolio-item:hover .portfolio-img { transform: scale(1.05); }
+.portfolio-info { padding: 12px 16px; background: #fff; }
+.portfolio-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.06em; }
+
+.prices-section { padding: 40px 0 80px; }
+.prices-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; margin-bottom: 40px; }
+.price-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 32px 24px; text-align: center; transition: all 0.3s ease; position: relative; }
+.price-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+.price-card.popular { border-color: #000; background: #fafafa; }
+.price-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; font-size: 10px; letter-spacing: 0.1em; padding: 4px 16px; border-radius: 30px; text-transform: uppercase; font-weight: 600; }
+.price-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.06em; margin: 16px 0 4px; }
+.price-value { font-size: 32px; font-weight: 700; color: #000; margin-bottom: 16px; }
+.price-list { list-style: none; padding: 0; margin-bottom: 24px; }
+.price-list li { padding: 6px 0; font-size: 14px; color: #555; border-bottom: 1px solid #f5f5f5; }
+.price-list li:last-child { border-bottom: none; }
+
+.calculator-section { background: #f8f6f4; padding: 40px; border-radius: 12px; }
+.calc-result { font-size: 28px; font-weight: 700; margin-top: 12px; }
+
+.contacts-section { padding: 60px 0 80px; }
+.contacts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px; }
+.contact-item { text-align: center; padding: 32px 16px; border: 1px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+.contact-item:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+.contact-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+.contact-item h3 { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.06em; margin-bottom: 4px; }
+.contact-item a { color: #000; text-decoration: none; font-size: 15px; transition: opacity 0.3s ease; }
+.contact-item a:hover { opacity: 0.6; }
+
+.login-section { padding: 160px 0 80px; min-height: 70vh; display: flex; align-items: center; }
+.login-box { max-width: 440px; margin: 0 auto; padding: 48px 40px; border: 1px solid #e0e0e0; border-radius: 12px; background: #fff; text-align: center; }
+.login-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.06em; margin-bottom: 4px; }
+.login-subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+.login-form .form-group { margin-bottom: 16px; }
+.login-form input { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; text-align: center; transition: border 0.3s ease; }
+.login-form input:focus { outline: none; border-color: #000; }
+.login-error { color: #e53935; font-size: 14px; margin-top: 12px; }
+
+/* ===== АДАПТИВ ===== */
+@media (max-width: 768px) {
+    .burger { display: flex; }
+    .nav { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: #fff; flex-direction: column; justify-content: center; gap: 24px; padding: 40px; transition: right 0.4s ease; box-shadow: -10px 0 40px rgba(0,0,0,0.05); }
+    .nav.open { right: 0; }
+    .nav a { font-size: 20px; }
+    .hero-bg { width: 100%; opacity: 0.12; }
+    .hero-content { max-width: 100%; padding: 40px 0; }
+    .hero-title { font-size: clamp(50px, 15vw, 80px); }
+    .preview-grid { grid-template-columns: 1fr; }
+    .advantages-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { height: 250px; order: -1; }
+    .values-grid { grid-template-columns: 1fr; }
+    .prices-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto 40px; }
+    .contacts-grid { grid-template-columns: 1fr 1fr; }
+    .login-box { padding: 32px 20px; margin: 0 16px; }
+    .flower-1 { width: 200px; height: 200px; left: -40px; }
+    .flower-2 { width: 150px; height: 150px; right: -20px; }
+    .flower-3 { display: none; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .hero-btn-wrap { flex-direction: column; align-items: center; }
+    .btn { width: 100%; text-align: center; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .contacts-grid { grid-template-columns: 1fr; }
+    .hero-text { font-size: 16px; }
+}
