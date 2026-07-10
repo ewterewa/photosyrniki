@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Нет интернета — PHOTOSYRNIK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .offline-box { max-width: 500px; }
+        .offline-icon { font-size: 80px; margin-bottom: 24px; opacity: 0.6; }
+        h1 { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 0.08em; margin-bottom: 12px; }
+        p { font-size: 16px; color: #aaa; line-height: 1.6; margin-bottom: 24px; }
+        .btn { display: inline-block; padding: 12px 40px; background: #fff; color: #000; border: none; border-radius: 50px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; text-decoration: none; transition: all 0.3s ease; }
+        .btn:hover { background: #ccc; }
+        .flower { position: fixed; opacity: 0.08; pointer-events: none; }
+        .flower-1 { width: 300px; height: 300px; bottom: -50px; left: -80px; background: url('assets/flowers/flower-1.png') center/contain no-repeat; }
+        .flower-2 { width: 200px; height: 200px; top: -40px; right: -40px; background: url('assets/flowers/flower-2.png') center/contain no-repeat; }
+    </style>
+</head>
+<body>
+    <div class="flower flower-1"></div>
+    <div class="flower flower-2"></div>
+    <div class="offline-box">
+        <div class="offline-icon">📡</div>
+        <h1>Нет соединения</h1>
+        <p>Кажется, интернет отключился.<br />Но всё, что вы уже открыли,<br /><strong>доступно без интернета!</strong></p>
+        <a href="index.html" class="btn">Вернуться на сайт</a>
+        <p style="font-size:13px; color:#555; margin-top:20px;">PHOTOSYRNIK • Работает офлайн</p>
+    </div>
+</body>
+</html>
