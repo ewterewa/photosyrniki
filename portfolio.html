@@ -131,4 +131,25 @@
             if (!portfolio || portfolio.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-portfolio">
-                        <p>🖼️ Порт
+                        <p>🖼️ Портфолио пока пусто</p>
+                        <span>Фото появятся здесь, как только вы их загрузите</span>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = portfolio.map((item, index) => `
+                <div class="portfolio-item">
+                    <div class="portfolio-img" style="background-image: url('${item.link}');"></div>
+                    <div class="portfolio-info">
+                        <h3>${item.name || 'Фото ' + (index + 1)}</h3>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Загружаем портфолио при открытии страницы
+        loadPortfolio();
+    </script>
+</body>
+</html>
