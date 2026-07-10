@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Портфолио — PHOTOSYRNIK</title>
+    <link rel="manifest" href="manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <div class="flower flower-1"></div>
+    <div class="flower flower-2"></div>
+    <div class="flower flower-3"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">PHOTOSYRNIK</a>
+                <nav class="nav">
+                    <a href="about.html">О нас</a>
+                    <a href="portfolio.html">Портфолио</a>
+                    <a href="prices.html">Цены</a>
+                    <a href="contacts.html">Контакты</a>
+                    <a href="login.html" class="nav-login">Войти</a>
+                </nav>
+                <button class="burger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1 class="page-title">Портфолио</h1>
+                <p class="page-subtitle">Наши лучшие работы</p>
+            </div>
+        </section>
+
+        <section class="portfolio-section">
+            <div class="container">
+                <!-- ===== ВСЕ ФОТО ПРОСТО ПЛИТКОЙ ===== -->
+                <div class="portfolio-grid" id="portfolioGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <span class="footer-copy">© 2026 PHOTOSYRNIK</span>
+                <div class="footer-socials">
+                    <a href="https://instagram.com/photosyrnik" target="_blank">Instagram</a>
+                    <a href="https://t.me/dj_milena" target="_blank">Telegram</a>
+                    <a href="mailto:photosyrnik@mail.ru">Email</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // ============================================================
+        // ПОРТФОЛИО — ВСЕ ФОТО ИЗ localStorage
+        // ============================================================
+        const grid = document.getElementById('portfolioGrid');
+
+        function renderPortfolio() {
+            const portfolio = JSON.parse(localStorage.getItem('photosyrnik_portfolio') || '[]');
+            
+            if (portfolio.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:#999; border:2px dashed #ddd; border-radius:12px;">
+                        <p style="font-size:18px; margin-bottom:8px;">🖼️ Портфолио пока пусто</p>
+                        <p style="font-size:14px;">Загрузите фото через админ-панель</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = portfolio.map(name => `
+                <div class="portfolio-item">
+                    <div class="portfolio-img" style="background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23f0f0f0"/%3E%3Ctext x="50%25" y="50%25" font-family="Arial" font-size="20" fill="%23999" text-anchor="middle" dy=".3em"%3E📸 ${name}%3C/text%3E%3C/svg%3E')"></div>
+                    <div class="portfolio-info">
+                        <h3>${name}</h3>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderPortfolio();
+    </script>
+</body>
+</html>
