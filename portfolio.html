@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Портфолио — PHOTOSYRNIK</title>
+    <link rel="manifest" href="manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .portfolio-item {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+            cursor: pointer;
+        }
+        .portfolio-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .portfolio-img {
+            width: 100%;
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+        }
+        .portfolio-info {
+            padding: 12px 16px;
+        }
+        .portfolio-info h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 0.06em;
+        }
+        .empty-portfolio {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+        }
+        .empty-portfolio p { font-size: 18px; margin-bottom: 8px; }
+        .empty-portfolio span { font-size: 14px; }
+
+        /* ===== ЛАЙТБОКС ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            object-fit: contain;
+            animation: zoomIn 0.3s ease;
+        }
+        .lightbox .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .lightbox .close-btn:hover {
+            transform: rotate(90deg);
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .lightbox .photo-name {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 20px;
+            border-radius: 30px;
+        }
+        @media (max-width: 768px) {
+            .lightbox img { max-width: 95%; max-height: 80%; }
+            .lightbox .close-btn { top: 10px; right: 16px; font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛАЙТБОКС -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="closeLightbox">✕</button>
+        <img id="lightboxImage" src="" alt="Фото" />
+        <div class="photo-name" id="lightboxName">Фото</div>
+    </div>
+
+    <div class="flower flower-1"></div>
+    <div class="flower flower-2"></div>
+    <div class="flower flower-3"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">PHOTOSYRNIK</a>
+                <nav class="nav">
+                    <a href="about.html">О нас</a>
+                    <a href="portfolio.html">Портфолио</a>
+                    <a href="prices.html">Цены</a>
+                    <a href="contacts.html">Контакты</a>
+                    <a href="login.html" class="nav-login">Войти</a>
+                </nav>
+                <button class="burger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1 class="page-title">Портфолио</h1>
+                <p class="page-subtitle">Наши лучшие работы</p>
+            </div>
+        </section>
+
+        <section class="portfolio-section" style="padding: 40px 0 80px;">
+            <div class="container">
+                <div class="portfolio-grid" id="portfolioGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <span class="footer-copy">© 2026 PHOTOSYRNIK</span>
+                <div class="footer-socials">
+                    <a href="https://instagram.com/photosyrnik" target="_blank">Instagram</a>
+                    <a href="https://t.me/dj_milena" target="_blank">Telegram</a>
+                    <a href="mailto:photosyrnik@mail.ru">Email</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // ============================================================
+        // 📸 18 ФОТО (3 СТАРЫХ + 15 НОВЫХ)
+        // ============================================================
+        const photos = [
+            // СТАРЫЕ
+            { name: 'IMG_1347', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1347.jpeg' },
+            { name: 'IMG_1348', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1348.jpeg' },
+            { name: 'IMG_1349', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1349.jpeg' },
+            // НОВЫЕ
+            { name: 'IMG_1355', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1355.jpeg' },
+            { name: 'IMG_1356', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1356.jpeg' },
+            { name: 'IMG_1357', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1357.jpeg' },
+            { name: 'IMG_1358', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1358.jpeg' },
+            { name: 'IMG_1359', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1359.jpeg' },
+            { name: 'IMG_1360', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1360.jpeg' },
+            { name: 'IMG_1361', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1361.jpeg' },
+            { name: 'IMG_1362', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1362.jpeg' },
+            { name: 'IMG_1363', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1363.jpeg' },
+            { name: 'IMG_1364', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1364.jpeg' },
+            { name: 'IMG_1365', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1365.jpeg' },
+            { name: 'IMG_1367', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1367.jpeg' },
+            { name: 'IMG_1368', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1368.jpeg' },
+            { name: 'IMG_1369', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1369.jpeg' },
+            { name: 'IMG_1370', url: 'https://raw.githubusercontent.com/ewterewa/photosyrniki/main/assets/images/portfolio/IMG_1370.jpeg' }
+        ];
+
+        // ============================================================
+        // ПОРТФОЛИО
+        // ============================================================
+        const grid = document.getElementById('portfolioGrid');
+
+        function renderPortfolio() {
+            if (photos.length === 0) {
+                grid.innerHTML = `<div class="empty-portfolio"><p>🖼️ Портфолио пока пусто</p><span>Загрузите фото через GitHub</span></div>`;
+                return;
+            }
+
+            grid.innerHTML = photos.map((photo, index) => `
+                <div class="portfolio-item" onclick="openLightbox(${index})">
+                    <div class="portfolio-img" style="background-image: url('${photo.url}');"></div>
+                    <div class="portfolio-info">
+                        <h3>${photo.name}</h3>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        // ЛАЙТБОКС
+        // ============================================================
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxName = document.getElementById('lightboxName');
+        const closeBtn = document.getElementById('closeLightbox');
+
+        function openLightbox(index) {
+            const photo = photos[index];
+            lightboxImage.src = photo.url;
+            lightboxName.textContent = photo.name;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+
+        renderPortfolio();
+    </script>
+</body>
+</html>
