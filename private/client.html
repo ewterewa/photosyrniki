@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет — PHOTOSYRNIK</title>
+    <link rel="manifest" href="../manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .client-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 2px solid #000; margin-bottom: 32px; }
+        .client-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; }
+        .client-logout { background: none; border: 1px solid #000; padding: 8px 24px; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; }
+        .client-logout:hover { background: #000; color: #fff; }
+
+        .client-tabs { display: flex; gap: 8px; margin-bottom: 32px; border-bottom: 1px solid #ddd; padding-bottom: 16px; }
+        .client-tab { padding: 10px 24px; background: none; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 18px; cursor: pointer; color: #999; border-radius: 30px; transition: all 0.3s ease; }
+        .client-tab.active { color: #fff; background: #000; }
+
+        .client-panel { display: none; animation: fadeIn 0.3s ease; }
+        .client-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .gallery-item { aspect-ratio: 1; background-size: cover; background-position: center; border-radius: 8px; border: 1px solid #eee; transition: transform 0.3s ease; }
+        .gallery-item:hover { transform: scale(1.03); }
+
+        .btn-download { padding: 12px 32px; background: #000; color: #fff; border: none; border-radius: 50px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-download:hover { background: #333; }
+
+        .journal-placeholder { text-align: center; padding: 60px 20px; background: #f8f6f4; border-radius: 12px; }
+        .journal-placeholder h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; margin-bottom: 8px; }
+        .journal-placeholder p { color: #999; }
+
+        .flower { position: fixed; pointer-events: none; z-index: -1; background-size: contain; background-repeat: no-repeat; opacity: 0.08; }
+        .flower-1 { width: 300px; height: 300px; bottom: -50px; left: -80px; background-image: url('../assets/flowers/flower-1.png'); }
+        .flower-2 { width: 200px; height: 200px; top: -30px; right: -30px; background-image: url('../assets/flowers/flower-2.png'); }
+
+        @media (max-width: 768px) { .client-header { flex-direction: column; gap: 16px; text-align: center; } }
+    </style>
+</head>
+<body>
+    <div class="flower flower-1"></div>
+    <div class="flower flower-2"></div>
+
+    <div class="container">
+        <header class="client-header">
+            <h1>👤 Личный кабинет</h1>
+            <button class="client-logout" onclick="window.location.href='../index.html'">Выйти</button>
+        </header>
+
+        <div class="client-tabs">
+            <button class="client-tab active" data-tab="photos">📸 Мои фото</button>
+            <button class="client-tab" data-tab="journal">📖 Мой журнал</button>
+        </div>
+
+        <div class="client-panel active" id="panel-photos">
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <button class="btn-download" id="downloadZipBtn">📥 Скачать все фото (ZIP)</button>
+        </div>
+
+        <div class="client-panel" id="panel-journal">
+            <div class="journal-placeholder">
+                <h3>📖 Журнал пока не доступен</h3>
+                <p>Оплатите съёмку, чтобы получить ваш персональный журнал</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
+        document.querySelectorAll('.client-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.client-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.client-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById('panel-' + this.dataset.tab).classList.add('active');
+            });
+        });
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        const samplePhotos = ['../assets/images/preview-1.jpg', '../assets/images/preview-2.jpg', '../assets/images/preview-3.jpg'];
+        samplePhotos.forEach(img => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.style.backgroundImage = `url('${img}')`;
+            galleryGrid.appendChild(div);
+        });
+
+        document.getElementById('downloadZipBtn').addEventListener('click', function() {
+            const zip = new JSZip();
+            samplePhotos.forEach((img, index) => {
+                fetch(img).then(res => res.blob()).then(blob => {
+                    zip.file(`photo-${index + 1}.jpg`, blob);
+                    if (index === samplePhotos.length - 1) {
+                        zip.generateAsync({ type: 'blob' }).then(content => {
+                            saveAs(content, 'мои_фото.zip');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
